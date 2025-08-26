@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+# Step 1: Use Python
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.10'
+    addToPath: true
+
+# Step 2: Install dependencies
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+# Step 3: (Optional) Run tests here if any
+
+# Step 4: Run the FastAPI server
+- script: |
+    uvicorn main:app --host 0.0.0.0 --port 8000
+  displayName: 'Run FastAPI App'
